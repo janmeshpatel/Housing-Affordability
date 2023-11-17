@@ -10,6 +10,7 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn import metrics
+from sklearn.ensemble import RandomForestRegressor
 
 
 
@@ -88,9 +89,6 @@ def result(request):
         n4=0
         n5=1
     
-
-    
-
     print(var1)
     print(var2)
     print(var3)
@@ -103,10 +101,25 @@ def result(request):
     print(n4)
     print(n5)
     
-    predictions = model.predict(np.array([var1,var2,var3,var4,var5, var6,n1,n2,n3,n4,n5]).reshape(1,-1))
+    LRpredictions = model.predict(np.array([var1,var2,var3,var4,var5, var6,n1,n2,n3,n4,n5]).reshape(1,-1))
+    LRpredictions = round(LRpredictions[0])
+    LRprice = "The Predicted price is $"+str(LRpredictions)
 
-    predictions = round(predictions[0])
 
-    price = "The Predicted price is $"+str(predictions)
+    #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Split the data into training and testing sets
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
 
-    return render(request, 'index.html', {"result2" : price})
+    # Create a Random Forest Regressor model
+    rf_regressor = RandomForestRegressor(n_estimators=100, random_state=42)
+
+    # Train the model on the training set
+    rf_regressor.fit(X_train, Y_train.ravel())
+
+    # Make predictions on the test set
+    RFRprediction = rf_regressor.predict(np.array([var1,var2,var3,var4,var5, var6,n1,n2,n3,n4,n5]).reshape(1,-1))
+    RFRprediction = round(RFRprediction[0])
+    RFRprice = "The Predicted price is $"+str(RFRprediction)
+
+
+    return render(request, 'index.html', {"LRresult" : LRprice, "RFRresult" : RFRprice})
