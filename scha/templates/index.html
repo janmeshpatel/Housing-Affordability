@@ -18,7 +18,7 @@
         }        
      
         .opt{
-            opacity:0.5 ;
+            opacity:0.9 ;
         }
 
         .dropdown-content {
@@ -42,8 +42,63 @@
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
-     
+
+.hi{
+    width: 220px;
+    height: 50px;
+    border-radius: 10px;
+
+}
+.pad{
+    padding: 20px
+}
+::placeholder {
+    /* Center the placeholder text both horizontally and vertically */
+    text-align: center;
+    line-height: 100px; /* Adjust the line-height based on your input height */
+}
+
+.btnn{
     
+    color: #232629;
+    width: 220px;
+    height: 50px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 45px;
+}
+
+.dis{
+    
+    
+    width: 220px;
+    height: 50px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 45px;
+    font-size: 18px;
+}
+.diss{
+    
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 45px;
+    font-size: 20px;
+}
+
+.dis1{
+    float: left;
+}
+
+.dis2{
+    float: left;
+    background-color: #232629;
+    margin-left: 45px;
+}
+    
+
     </style>
 </head>
 <body>
@@ -58,42 +113,32 @@
     <center>
         <div class="opt" style=" color: white; height: 700px; width: 1300px; background-color: #232629; border-radius: 30px; ">
             <br>
-            <h3>Please enter the following value for prediction :</h3><br><br><br>
+            <h3>Please enter the following value for prediction :</h3><br>
             <form action="result" method="POST">
                 {% csrf_token %}
 
                 <div class="row">
-                    <div class="col-sm-4">
-                        <input type="text" name="i1" placeholder="House Median Age">
+                    <div class="col-sm-3 pad">
+                        <input class="hi" type="text" name="i1" placeholder="House Median Age">
                     </div>
-                    <div class="col-sm-4">
-                        <input type="text" name="i2" placeholder="Total Rooms">
+                    <div class="col-sm-3 pad">
+                        <input class="hi" type="text" name="i2" placeholder="Total Rooms">
                     </div>
-                    <div class="col-sm-4">
-                        <input type="text" name="i3" placeholder="Total Bedrooms">
+                    <div class="col-sm-3 pad">
+                        <input class="hi" type="text" name="i3" placeholder="Total Bedrooms">
                     </div>
-                </div>
-
-                <br>
-
-                <div class="row">
-                    <div class="col-sm-4">
-                        <input type="text" name="i4" placeholder="Population">
+                    <div class="col-sm-3 pad">
+                        <input class="hi" type="text" name="i4" placeholder="Population">
                     </div>
-                    <div class="col-sm-4">
-                        <input type="text" name="i5" placeholder="Households">
+                    <div class="col-sm-3 pad">
+                        <input class="hi" type="text" name="i5" placeholder="Households">
                     </div>
-                    <div class="col-sm-4">
-                        <input type="text" name="i6" placeholder="Median Income">
+                    <div class="col-sm-3 pad">
+                        <input class="hi" type="text" name="i6" placeholder="Median Income">
                     </div>
-
-                </div>
-
-                <br>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label for="cars">Choose the location :</label>
-                        <select id="cars" name="i7">
+                    <div class="col-sm-3 pad">
+                        <select class="hi" name="i7">
+                            <option value="n1"> - Choose the Location - </option>
                             <option value="n1">1H-Ocean</option>
                             <option value="n2">Inland</option>
                             <option value="n3">Island</option>
@@ -102,24 +147,68 @@
 
                         </select>
                     </div>
+                    <div class="col-sm-3 pad">
+                        <input class="hi" style="background-color: #232629; color: white; border: 1px solid ; box-shadow: 0 12px 16px 0 rgba(255, 255, 255, 0.24),0 17px 100px 0 rgba(0,0,0,0.19);"  type="submit" value="Predict" name="Predict">
+
+                    </div>
+                   
 
                 </div>
                 
                 <br>
+                <hr>
+                <div class="dis1">
 
-                <div>
-                    <input type="submit" value="Predict">
+                    <div class="dis">
+                        <input class="btnn" style="color: #ffffff; background-color:#232629"  type="submit" value="Linear Regression" disabled="true" name="lr">
+                    </div>
+                    
+                    <div class="dis">
+                        <input class="btnn" style="color: #ffffff; background-color:#232629"  type="submit" value="Random Forest Regressor" disabled="true" name="rfr"> 
+                    </div>
+
+                    <div class="dis">
+                        <input class="btnn" style="color: #ffffff; background-color:#232629"  type="submit" value="Decision Tree" disabled="true" name="dt">
+                    </div>
+
+                    <div class="dis">
+                        <input class="btnn" style="color: #ffffff; background-color:#232629"  type="submit" value="KNN Algorithm" disabled="true" name="knn">
+                    </div>
+
+                    <div class="dis">
+                        <input class="btnn" style="color: #ffffff; background-color:#232629" type="submit" value="Support Vector Regressor" disabled="true" name="svr">
+                    </div>
+                    
+                    
+                </div>
+<br>
+                <div class="dis2">
+
+                    <div class="diss">
+                        <span style="margin-left: 1px;"> -    {{LRresult}}</span>
+                    </div>
+
+                    <div class="diss">
+                        <span style="margin-left: 1px;">-    {{RFRresult}}</span>
+                    </div>
+                    
+                    <div class="diss">
+                        <span style="margin-left: 1px;">-    {{DTResult}}</span>
+                    </div>
+                
+                    <div class="diss">
+                        <span style="margin-left: 1px;">-    {{KNNResult}}</span>
+                    </div>
+
+                    <div class="diss">
+                        <span style="margin-left: 1px;">-   {{SVMResult}}</span>
+                    </div>
+                    
+                    
                 </div>
             </form>
-<br><br>
-            <div class="row">
-                <h2>Linear Rergressor :{{LRresult}}</h2>
-            </div>
-            <div class="row">
-                <h2>Random Forest Regressor :{{RFRresult}}</h2>
-            </div>
-
         </div>
+        
     </center>
 </body>
 </html>
