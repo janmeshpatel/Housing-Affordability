@@ -14,6 +14,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
 from sklearn.metrics import mean_squared_error
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.metrics import accuracy_score
 from sklearn.neighbors import KNeighborsRegressor
 
 
@@ -38,7 +39,7 @@ def result(request):
     RFRprice = ""
     LRprice = ""
     SVRprice = ""
-    
+
     data = pd.read_csv(r'C:\Users\Janmesh\OneDrive - Saint Peters University\Desktop\Project\scha\Ml_model\California.csv')
 
     data = data.drop(['longitude'], axis=1)
@@ -107,7 +108,7 @@ def result(request):
     print(n3)
     print(n4)
     print(n5)
-
+    Test = np.array([var1,var2,var3,var4,var5, var6,n1,n2,n3,n4,n5]).reshape(1,-1)
     
     print("hello")
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,9 +119,11 @@ def result(request):
     model = LinearRegression()
     model.fit(X_train, Y_train)
         
-    LRpredictions = model.predict(np.array([var1,var2,var3,var4,var5, var6,n1,n2,n3,n4,n5]).reshape(1,-1))
-    LRpredictions = round(LRpredictions[0])
-    LRprice = "The Predicted price is $"+str(LRpredictions)
+    LRprediction = model.predict(Test)
+    LRprediction = round(LRprediction[0])
+ 
+
+    LRprice = "The Predicted price is $"+str(LRprediction)
     print(LRprice)
 
     
@@ -136,8 +139,10 @@ def result(request):
     rf_regressor.fit(X_train, Y_train.ravel())
 
     # Make predictions on the test set
-    RFRprediction = rf_regressor.predict(np.array([var1,var2,var3,var4,var5, var6,n1,n2,n3,n4,n5]).reshape(1,-1))
+    RFRprediction = rf_regressor.predict(Test)
     RFRprediction = round(RFRprediction[0])
+  
+
     RFRprice = "The Predicted price is $"+str(RFRprediction)
     print(RFRprice)
         
@@ -156,8 +161,10 @@ def result(request):
     #-svr_regressor.fit(X_train, Y_train.ravel())
 
     # Make predictions on the test set
-    #-SVRprediction = svr_regressor.predict(np.array([var1,var2,var3,var4,var5, var6,n1,n2,n3,n4,n5]).reshape(1,-1))
-    #SVRprediction = round(SVRprediction[0])
+    #-SVRprediction = svr_regressor.predict(np.array(Test)
+    #-SVRprediction = round(SVRprediction[0])
+   
+
     #-SVRprice = "The Predicted price is $"+str(SVRprediction)
     #-print(SVRprice)
 
@@ -173,9 +180,12 @@ def result(request):
     tree_regressor.fit(X_train, Y_train)
 
     # Make predictions on the test set
-    DTprediction = tree_regressor.predict(np.array([var1,var2,var3,var4,var5, var6,n1,n2,n3,n4,n5]).reshape(1,-1))
+    DTprediction = tree_regressor.predict(Test)
     DTprediction = round(DTprediction[0])
+    
     DTprice = "The Predicted price is $"+str(DTprediction)
+
+  
     print(DTprice)
 
 
@@ -198,11 +208,13 @@ def result(request):
     knn_regressor.fit(X_train, Y_train)
 
     # Make predictions on the test set
-    KNNprediction = knn_regressor.predict(X_test)  
+    KNNprediction = knn_regressor.predict(Test)  
     KNNprediction = round(KNNprediction[0])
     KNNprice = "The Predicted price is $"+str(KNNprediction)
-    print(KNNprice)
+    
 
+
+    print(KNNprice)
 
     return render(request, 'index.html', {"LRresult" : LRprice, "RFRresult" : RFRprice, "SVMResult" : SVRprice, "DTResult" : DTprice, "KNNResult" : KNNprice})
 
